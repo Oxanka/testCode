@@ -1,0 +1,68 @@
+<div class="container">
+    <ul class="menu">
+        <li class="underline"><a href="#!/aboutus">About Us</a></li>
+        <li class="underline"><a href="#!/aboutus">Terms and condition</a></li>
+    </ul>
+
+    <div ng-hide="AbsentEmployees.dataLoaded" class="preloader">
+    </div>
+
+    <div ng-show="AbsentEmployees.dataLoaded">
+
+
+    <h2 class="center_text">Welcome {{one_candidate_user_for_interview.firstName}} {{one_candidate_user_for_interview.lastName}} to your Interview!</h2>
+    <p class="justify"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec consequat ligula quis lobortis
+        porttitor. Etiam gravida orci velit, vitae pretium massa scelerisque vitae. Etiam et vehicula nibh, ac pharetra
+        ante. Sed ornare fringilla vehicula. Vestibulum at libero vitae metus venenatis gravida quis vitae nisl.
+        Maecenas placerat ante sapien. Morbi scelerisque porttitor diam, id tempor est aliquet nec. Etiam sed orci eros.
+    </p>
+    <div>
+           <input class="volume_range" type="range" name="range" ng-model="value" min="{{min}}" max="{{max}}">
+       </div>
+
+
+    <div class="center_text">
+        <video id="gum" autoplay muted></video>
+    </div>
+
+
+    <div class="center_text">
+    <button id="record" disabled>Start Recording</button>
+    </div>
+
+
+    <div class="border_text text_margin_top">
+
+        <div  data-ng-repeat="choice in questions_interview_with_status">
+            <span>Questions №{{choice.number}}: {{choice.title}}</span>
+        </div>
+    </div>
+
+    <button class="margin_top margin_bottom" ng-click="openInfo()">A Quick Fix for Mac Camera Not Working</button>
+    <div class="line_height" ng-show="open" align="justify">
+        Fortunately, there is another trick that seems to fix the problem immediately using a command line force quit, and does not require a reboot:<br>
+
+        1. Quit all open apps that may try to use the FaceTime camera<br>
+        2. Open Terminal, found in the /Applications/Utilities directory in OS X<br>
+        3. Enter the following command strings exactly, then hit return:<br>
+        <code>sudo killall VDCAssistant</code><br>
+
+        4. Still at the terminal, issue the following command as well:<br>
+        <code>sudo killall AppleCameraAssistant</code><br>
+
+        5. Enter the administrator password when requested, this is required to execute a command with superuser privileges as prefixed by sudo<br>
+        6. Relaunch the app that was attempting to use the camera<br>
+
+        At this point the front camera should work again as if nothing was ever wrong with it.<br>
+
+        For some background as to what’s going on: the VDCAssistant process opens any time an app attempts to use the process. It appears the “camera not found” error message shows up when the VDCAssistant does not properly close when an earlier app used the camera, resulting in the camera staying in use and being blocked by other apps. Accordingly, the above trick found on the Apple Forums kills that stale process so that it can start fresh again with the new app. For those who are not inclined to use the Terminal, you can also forcibly quit the errant VDCAssistant task with Activity Monitor.<br>
+
+        If you want to string the two commands together into a single line to fix an unresponsive Mac camera you can do that like so:<br>
+
+        <code>sudo killall AppleCameraAssistant;sudo killall VDCAssistant</code><br>
+
+        Again, hit return and enter the admin password when requested.<br>
+    </div>
+
+    </div>
+</div>

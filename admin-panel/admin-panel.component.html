@@ -1,0 +1,78 @@
+<div class="def-list">
+  <button md-fab color="warn" aria-label="Create rule" class="add-button" (click)="createRule()">
+    <md-icon class="md-24">add</md-icon>
+  </button>
+  <div class="def-header">
+    <h2 md-header>Rules</h2>
+  </div>
+  <div class="controls">
+    <md-form-field>
+      <input mdInput placeholder="Search..." #searchbar aria-label="Search" [mdAutocomplete]="auto" [formControl]="search" (keyup.enter)="filter(search.value, sort)">
+      <md-icon class="md-24" aria-label="Clear search bar" (click)="filter('')">refresh</md-icon>
+      <md-autocomplete #auto="mdAutocomplete">
+        <md-option *ngFor="let item of autocompValues" [value]="item.name" (onSelectionChange)="filter(item.name)">
+          <span>{{ item.name }}</span>
+        </md-option>
+      </md-autocomplete>
+    </md-form-field>
+    <md-paginator [length]="totalCount" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent($event)">
+    </md-paginator>
+  </div>
+  <md-card class="headers">
+    <div class="first">
+      <md-icon class="md-24" *ngIf="sort == 'name'" (click)="filter(search.value ? search.value : '', 'name', sort == 'name' ? !direction : true)">
+        {{direction ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
+      </md-icon>
+      <span (click)="filter(search.value ? search.value : '', 'name', sort == 'name' ? !direction : true)">Name</span>
+    </div>
+    <div class="second">
+      <md-icon class="md-24" *ngIf="sort == 'category'" (click)="filter(search.value ? search.value : '', 'category', sort == 'category' ? !direction : true)">
+        {{direction ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
+      </md-icon>
+      <span (click)="filter(search.value ? search.value : '', 'category', sort == 'category' ? !direction : true)">
+        Category
+      </span>
+    </div>
+    <div class="stabilizer"></div>
+  </md-card>
+  <md-accordion class="headers-align" *ngIf="!loading">
+    <md-expansion-panel hideToggle="true" *ngFor="let def of defs">
+      <md-expansion-panel-header>
+        <md-panel-title class="cut-text">
+          {{def.name}}
+        </md-panel-title>
+        <md-panel-description class="cut-text">
+          {{def.category}}
+        </md-panel-description>
+        <md-icon>create</md-icon>
+      </md-expansion-panel-header>
+
+      <md-form-field>
+        <input mdInput type="text" placeholder="Name" [(ngModel)]="def.name">
+      </md-form-field>
+
+      <md-form-field>
+        <input mdInput type="text" placeholder="Category" [(ngModel)]="def.category">
+      </md-form-field>
+
+      <md-form-field>
+        <input mdInput type="number" placeholder="Importance score" min="0" max="100" [(ngModel)]="def.importance">
+      </md-form-field>
+
+      <md-form-field class="textarea-control">
+        <textarea mdInput mdTextareaAutosize placeholder="Value" [(ngModel)]="def.value">
+          </textarea>
+      </md-form-field>
+
+      <md-action-row>
+        <button md-button color="warn" (click)="delete(defs, def)">Delete</button>
+        <button md-button class="style-button-color" (click)="update(def)">Save</button>
+      </md-action-row>
+    </md-expansion-panel>
+  </md-accordion>
+  <div class="loader" *ngIf="loading">
+    <div class="hint">Loading...</div>
+    <img src="assets/images/Spinner.gif" />
+  </div>
+
+</div>

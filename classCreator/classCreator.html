@@ -1,0 +1,196 @@
+<div headerpage></div>
+<div class="page__content page__content--sidebar page__content--sidebar-xxl">
+    <div class="page__sidebar">
+        <div class="sidebar-tabs">
+            <div class="sidebar-tabs__content sidebar-tabs__content--active">
+                <div class="lessons">
+                    <div class="lessons__search">
+                        <div class="search search--sidebar">
+                            <form class="form search__form">
+                                <input class="search__query" id="search-query" name="search-query" type="text" placeholder="Search by name" ng-model="searchInfo"
+                                       ng-change="search(searchInfo)">
+                                <button class="button button-link search__submit" type="submit">
+                                    <svg class="icon icon--search">
+                                        <use xlink:href="assets/images/icons.svg#search"></use>
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="lessons__list">
+                        <div class="lessons__lesson" ng-repeat="obj in traits">
+                            <div class="lesson-thumbnail" ng-drop="true" ng-drop-success="onDropCompleteRemove($data,$event)" ng-drag="true" ng-drag-data="obj" data-allow-transform="true">
+                                <div class="lesson-thumbnail__image">
+                                    <div ng-if="obj.type === 'jpg' || obj.type ==='jpeg' || obj.type ==='png'">
+                                        <img src="{{appUrl}}/{{obj.filename}}">
+                                    </div>
+                                    <div ng-if="obj.type === 'mp4' || obj.type ==='avi' || obj.type ==='webm'">
+                                        <video>
+                                            <source type="video/mp4" src={{appUrl}}/{{obj.filename}}>
+                                        </video>
+                                    </div>
+                                </div>
+                                <div class="lesson-thumbnail__content"  >
+                                    <div class="lesson-thumbnail__title">
+                                        <div class="title title--h6 title--semi-light">{{obj.name}}</div>
+                                    </div>
+                                    <div class="lesson-thumbnail__tags">
+                                        <div class="tag" ng-repeat="tag in obj.tags">{{tag.name}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page__main">
+        <div class="page-title">
+            <div class="page-title__title">
+                <h1 class="title title--h1">Class creator</h1>
+            </div>
+            <div class="page-title__other">
+                <button class="button button-default" type="button"  ng-click="createClass()">Create</button>
+            </div>
+        </div>
+        <div  ng-if="typeCreator == 'formatted'" class="class-creator">
+            <div class="class-creator__switcher">
+                <div class="buttons-switcher">
+                    <button class="button button--active" type="button" ng-click="selectFormatted()">Formatted</button>
+                    <button class="button" type="button"  ng-click="selectUnformatted()">Unformatted</button>
+                </div>
+            </div>
+            <div class="class-creator__content">
+                <div class="class-creator-formatted__sections">
+                    <div class="class-creator-formatted-section">
+                        <div class="class-creator-formatted-section__header">
+                            <div class="class-creator-formatted-section__title">
+                                <div class="title title--h3">Traits of a champion</div>
+                            </div>
+                        </div>
+                        <div class="class-creator-formatted-section__content">
+                            <div class="class-creator-formatted-section__videos">
+                                <div class="class-creator-video" ng-repeat="obj in droppedObjectsTraits">
+                                    <div class="class-creator-video__media">
+                                        <div ng-if="obj.type === 'jpg' || obj.type ==='jpeg' || obj.type ==='png'">
+                                            <img src="{{appUrl}}/{{obj.filename}}">
+                                        </div>
+                                        <div ng-if="obj.type === 'mp4' || obj.type ==='avi' || obj.type ==='webm'">
+                                            <video controls>
+                                                <source type="video/mp4" src={{appUrl}}/{{obj.filename}}>
+                                            </video>
+                                        </div>
+                                    </div>
+                                    <div class="class-creator-video__content">
+                                        <div class="class-creator-video__title">
+                                            <div class="title title--h3 title--semi-light">{{obj.name}}</div>
+                                            <button class="button button-link button-link--blue" type="button" ng-click="deleteElement('traits', obj._id)">Delete</button>
+                                        </div>
+                                        <div class="class-creator-video__description">{{obj.description}}</div>
+                                        <div class="class-creator-video__edit-form">
+                                            <form class="form" method="post">
+                                                <div class="form__section">
+                                                    <div class="form-item form__item">
+                                                        <div class="form-item__control">
+                                                            <span class="textarea"><textarea class="textarea__control" id="videodescription" name="video-description" cols="30" rows="10"></textarea></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form__footer">
+                                                    <button class="button button-link" type="button" disabled="disabled">Add</button>
+                                                    <button class="button button-link" type="button">Cancel</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="class-creator-video__tags">
+                                        <div class="tags-list__tag">
+                                            <div class="tag">Traits</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="class-creator-formatted-section__more-videos">
+                                <div class="drag-and-drop" ng-drop="true" ng-drop-success="onDropComplete($data,$event)">
+                                    Drag &amp; Drop exercise here
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-if="typeCreator == 'unformatted'" class="class-creator">
+            <div class="class-creator__switcher">
+                <div class="buttons-switcher">
+                    <button class="button" type="button" ng-click="selectFormatted()">Formatted</button>
+                    <button class="button button--active" type="button" ng-click="selectUnformatted()">Unformatted</button>
+                </div>
+            </div>
+            <div class="class-creator__header">
+                <div class="class-creator__class-name" contenteditable="true"  ng-model="className">Class name</div>
+            </div>
+            <div class="class-creator__content">
+                <div class="class-creator-unformatted" >
+                    <div class="class-creator-unformatted__video-cell" ng-repeat="obj in droppedObjectsUnformatted">
+                        <div class="class-creator-video">
+                            <div class="class-creator-video__media">
+                                <div ng-if="obj.type === 'jpg' || obj.type ==='jpeg' || obj.type ==='png'">
+                                    <img src="{{appUrl}}/{{obj.filename}}">
+                                </div>
+                                <div ng-if="obj.type === 'mp4' || obj.type ==='avi' || obj.type ==='webm'">
+                                    <video>
+                                        <source type="video/mp4" src={{appUrl}}/{{obj.filename}}>
+                                    </video>
+                                </div>
+                            </div>
+                            <div class="class-creator-video__content">
+                                <div class="class-creator-video__title">
+                                    <div class="title title--h3 title--semi-light">{{obj.name}}</div>
+                                    <button class="button button-link button-link--blue" type="button" ng-click="deleteElement('all', obj._id)">Delete</button>
+                                </div>
+                                <div class="class-creator-video__description">{{obj.description}}</div>
+                                <div class="class-creator-video__edit-form">
+                                    <form class="form" method="post">
+                                        <div class="form__section">
+                                            <div class="form-item form__item">
+                                                <div class="form-item__control">
+                                                    <span class="textarea">
+                                                        <textarea class="textarea__control" name="video-description" cols="30" rows="10">
+                                                        </textarea>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form__footer">
+                                            <button class="button button-link" type="button" disabled="disabled">Add</button>
+                                            <button class="button button-link" type="button">Cancel</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="class-creator-video__tags">
+                                <div class="tags-list"  ng-if="obj.typeMedia === 'Traits'">
+                                    <div class="tags-list__tag">
+                                        <div class="tag">Traits</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="button button-drag" type="button">
+                            <svg class="icon icon--drag">
+                                <use xlink:href="assets/images/icons.svg#drag"></use>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="class-creator-unformatted__video-cell">
+                        <div class="drag-and-drop" ng-drop="true" ng-drop-success="onDropComplete($data,$event)"
+                        >Drag &amp; Drop exercise here</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
